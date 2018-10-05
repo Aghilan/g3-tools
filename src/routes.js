@@ -53,6 +53,11 @@ const Dropdowns = Loadable({
   loading: Loading,
 });
 
+const Forms = Loadable({
+  loader: () => import('./views/Base/Forms'),
+  loading: Loading,
+});
+
 const Jumbotrons = Loadable({
   loader: () => import('./views/Base/Jumbotrons'),
   loading: Loading,
@@ -90,6 +95,11 @@ const ProgressBar = Loadable({
 
 const Switches = Loadable({
   loader: () => import('./views/Base/Switches'),
+  loading: Loading,
+});
+
+const Tables = Loadable({
+  loader: () => import('./views/Base/Tables'),
   loading: Loading,
 });
 
@@ -133,11 +143,6 @@ const Charts = Loadable({
   loading: Loading,
 });
 
-const Dashboard = Loadable({
-  loader: () => import('./views/Dashboard'),
-  loading: Loading,
-});
-
 // issue with mispalced position of cm value for acync load
 // const CodeEditors = Loadable({
 //   loader: () => import('./views/Editors/CodeEditors'),
@@ -165,8 +170,18 @@ const ValidationForms = Loadable({
   loading: Loading,
 });
 
-const GoogleMaps = Loadable({
-  loader: () => import('./views/GoogleMaps'),
+const Brands = Loadable({
+  loader: () => import('./views/Brands'),
+  loading: Loading,
+});
+
+const BrandDetails = Loadable({
+  loader: () => import('./views/BrandDetails'),
+  loading: Loading,
+});
+
+const Dashboard = Loadable({
+  loader: () => import('./views/Dashboard'),
   loading: Loading,
 });
 
@@ -262,14 +277,18 @@ const User = Loadable({
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', name: 'Home', component: DefaultLayout, exact: true },
+  { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/theme', name: 'Theme', component: Colors, exact: true },
+  { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },
-  { path: '/base', name: 'Base', component: Cards, exact: true },
-  { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
+  { path: '/base', exact: true, name: 'Base', component: Cards },
   { path: '/base/cards', name: 'Cards', component: Cards },
+  { path: '/base/forms', name: 'Forms', component: Forms },
+  { path: '/base/switches', name: 'Switches', component: Switches },
+  { path: '/base/tables', name: 'Tables', component: Tables },
+  { path: '/base/tabs', name: 'Tabs', component: Tabs },
+  { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
   { path: '/base/carousels', name: 'Carousel', component: Carousels },
   { path: '/base/collapses', name: 'Collapse', component: Collapses },
   { path: '/base/dropdowns', name: 'Dropdowns', component: Dropdowns },
@@ -297,7 +316,6 @@ const routes = [
   { path: '/forms/advanced-forms', name: 'Advanced Forms', component: AdvancedForms },
   { path: '/forms/basic-forms', name: 'Basic Forms', component: BasicForms },
   { path: '/forms/validation-forms', name: 'Form Validation', component: ValidationForms },
-  { path: '/google-maps', name: 'Google Maps', component: GoogleMaps },
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
   { path: '/icons/flags', name: 'Flags', component: Flags },
@@ -325,6 +343,12 @@ const routes = [
   { path: '/apps/invoicing/invoice', name: 'Invoice', component: Invoice },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User }
+  { path: '/charts', name: 'Charts', component: Charts },
+  { path: '/brands', name: 'Brands', component: Brands },
+  { path: '/branddetails', name: 'Brand Details', component: BrandDetails },
+  //{ path: '/#/branddetails', name: 'Brand Details', component: BrandDetails },
+  { path: '/users', exact: true,  name: 'Users', component: Users },
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
 ];
 
 export default routes;

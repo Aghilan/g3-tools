@@ -4,6 +4,7 @@ import {
   Carousels,
   Collapses,
   Dropdowns,
+  Forms,
   Jumbotrons,
   ListGroups,
   Navbars,
@@ -12,6 +13,7 @@ import {
   Popovers,
   ProgressBar,
   Switches,
+  Tables,
   Tabs,
   Tooltips,
 } from './Base';
@@ -29,6 +31,7 @@ import { Calendar, Spinners } from './Plugins';
 import { DataTable, Tables } from './Tables';
 import { Colors, Typography } from './Theme';
 import { Compose, Inbox, Invoice, Message } from './Apps';
+import Brands from './Brands';
 import Widgets from './Widgets';
 
 export {
@@ -53,6 +56,7 @@ export {
   Tabs,
   Tables,
   Charts,
+  Brands,
   Dashboard,
   Widgets,
   Jumbotrons,
@@ -62,6 +66,7 @@ export {
   Navs,
   Navbars,
   ListGroups,
+  Forms,
   Dropdowns,
   Collapses,
   Carousels,

@@ -1,0 +1,6 @@
+{
+    "name": "BrandDetails",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./BrandDetails.js"
+  }
