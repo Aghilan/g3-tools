@@ -245,11 +245,6 @@ const DataTable = Loadable({
   loading: Loading,
 });
 
-const Tables = Loadable({
-  loader: () => import('./views/Tables/Tables'),
-  loading: Loading,
-});
-
 const Colors = Loadable({
   loader: () => import('./views/Theme/Colors'),
   loading: Loading,
@@ -342,7 +337,7 @@ const routes = [
   { path: '/apps/invoicing', name: 'Invoice', component: Invoice, exact: true },
   { path: '/apps/invoicing/invoice', name: 'Invoice', component: Invoice },
   { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User }
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/brands', name: 'Brands', component: Brands },
   { path: '/branddetails', name: 'Brand Details', component: BrandDetails },

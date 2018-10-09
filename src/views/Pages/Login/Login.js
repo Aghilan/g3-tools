@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {isLoggedIn: false};
+    global.isLoggedIn = false;
+  }
+  handleLoginClick() {
+    this.setState({isLoggedIn: true});
+    global.isLoggedIn = true;
+  }
+
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false});
+  }
+
+  renderRedirect = () => {
+    if (this.state.isLoggedIn) {
+      return <Redirect to='/dashboard' />
+    }
+  }
   render() {
     return (
       <div className="app flex-row align-items-center">
@@ -32,7 +54,8 @@ class Login extends Component {
                       </InputGroup>
                       <Row>
                         <Col xs="6">
-                          <Button color="primary" className="px-4">Login</Button>
+                          {this.renderRedirect()}
+                          <Button color="primary" className="px-4" onClick={this.handleLoginClick}>Login</Button>
                         </Col>
                         <Col xs="6" className="text-right">
                           <Button color="link" className="px-0">Forgot password?</Button>

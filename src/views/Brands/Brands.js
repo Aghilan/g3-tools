@@ -2,28 +2,19 @@ import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom'
 import PropTypes from 'prop-types';
 //import { BrandDetails } from '../BrandDetails';
+import Tabulator from "tabulator-tables"; //import Tabulator library
+import "tabulator-tables/dist/css/tabulator.min.css"; //import Tabulator stylesheet
+import moment from 'moment';
+import $ from 'jquery';
 import {
-  Badge,
   Button,
-  ButtonDropdown,
   ButtonGroup,
-  ButtonToolbar,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardTitle,
   Col,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Progress,
   Row,
-  Form,
-  FormGroup,
-  Table
 } from 'reactstrap';
+
+import columns from './data-columns';
+import data from './data';
 
 const styles = {
   button: {
@@ -47,104 +38,36 @@ const brandData = new Array();
 class Brands extends Component {
   constructor(props) {
     super(props);
-
-    this.BrandTable = this.BrandTable.bind(this);
     this.rowClick = this.rowClick.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
 
-    this.state = {rowClicked: false};
+    this.state = {rowClicked: false, tableInitiated: false};
+    this.el = null;
+    this.tabulator = null; //variable to hold your table
+    this.columns = columns
+    this.data = data//data for table to display
 
     //const BrandTableElement = <BrandTable data={brandData}/>;
   }
 
-  BrandTable(props) {
-  
-    return (
-      <table className="table table-bordered table-striped table-hover" id="brandsTable" style={styles.handCursor}>
-        <thead align="center">
-          <tr>
-            <th>#</th>
-            <th width="30%">Name</th>
-            <th>S...</th>
-            <th>D...</th>
-            <th width="15%">Primary Source</th>
-            <th>Amazon Listings</th>
-            <th>Sold on Amazon</th>
-            <th>Scan Amazon</th>
-            <th>Restricted</th>
-            <th>Good Buys</th>
-            <th>Scraping</th>
-          </tr>
-        </thead>
-        <tbody align="center">
-          <tr onClick={(e) => this.rowClick("brand_0")} id="brand_0">
-            <td></td>
-            <td>110%</td>
-            <td>Evaluating</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>SBS</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>455</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>No</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td><input name="table-check" type="checkbox" /></td>
-          </tr>
-          <tr onClick={() => this.rowClick("brand_1")} id="brand_1">
-            <td></td>
-            <td>110%</td>
-            <td>Evaluating</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>SBS</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>455</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>No</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td><input name="table-check" type="checkbox" /></td>
-          </tr>
-          <tr onClick={() => this.rowClick("brand_2")} id="brand_2">
-            <td></td>
-            <td>110%</td>
-            <td>Evaluating</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>SBS</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>455</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>No</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td><input name="table-check" type="checkbox" /></td>
-          </tr>
-          <tr onClick={() => this.rowClick("brand_3")} id="brand_3">
-            <td></td>
-            <td>110%</td>
-            <td>Evaluating</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>SBS</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>455</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>No</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td><input name="table-check" type="checkbox" /></td>
-          </tr>
-          <tr onClick={() => this.rowClick("brand_4")} id="brand_4">
-            <td></td>
-            <td>110%</td>
-            <td>Evaluating</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>SBS</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>455</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td>No</td>
-            <td><input name="table-check" type="checkbox" /></td>
-            <td><input name="table-check" type="checkbox" /></td>
-          </tr>
-        </tbody>
-      </table>
-    );
+
+  componentDidMount() {
+    //instantiate Tabulator when element is mounted
+    this.tabulator = new Tabulator(this.el, {
+      data: this.data, //link data to table
+      columns: this.columns,
+      layoutColumnsOnNewData: true,
+      resizableRows:true,
+      pagination:"local",
+      paginationSize:10,
+      redirectToDetails: function() {
+        this.setState({
+          rowClick: true
+        })
+      }
+    });
+    console.log(this.tabulator);
+    this.setState({tableInitiated: true})
   }
 
   rowClick(brand_id) {
@@ -156,7 +79,41 @@ class Brands extends Component {
       return <Redirect to='/branddetails' />
   }
 
+  listRestriction (data, customOptions) {
+    if (customOptions.restriction === "All") {
+      return true;
+    }
+    return data.restricted === customOptions.restriction;
+  }
+
+  setRestriction(e) {
+    let restriction = e.target.value;
+    this.tabulator.setFilter(this.listRestriction, {restriction})
+  }
+
+  listStatus (data, customOptions) {
+    return data.status === customOptions.status
+  }
+
+  setStatus (e) {
+    console.log(e.target.value);
+    let status = e.target.value
+    this.tabulator.setFilter(this.listStatus, {status});
+  }
+
   render() {
+      var statuses = [];
+      if(this.tabulator) {
+        var tableData = this.tabulator.getData();
+        tableData.map(item => {
+          console.log(item.status);
+          if (statuses.indexOf(item.status) === -1) {
+            statuses.push(item.status)
+          }
+        });
+
+      }
+
       return (
         <div className="animated fadeIn">
           <Row>
@@ -180,48 +137,40 @@ class Brands extends Component {
             </Col>
           </Row>
           <Row className="form-group mt-3">
-            <Col md="4" style={styles.radioTop}>
+            <Col md="4" style={styles.radioTop} onChange={this.setRestriction.bind(this)}>
               <div className="form-check form-check-inline">
                 <label className="form-check-label form-check-label">Filter:</label>
               </div>
               <div className="form-check form-check-inline">
-                <input id="inline-radio1" name="inline-radios" type="radio" className="form-check-input form-check-input" value="option1" />
+                <input id="inline-radio1" name="inline-radios" type="radio" className="form-check-input form-check-input" value="No" />
                 <label className="form-check-label form-check-label ">Unrestricted</label>
               </div>
               <div className="form-check form-check-inline">
-                <input id="inline-radio2" name="inline-radios" type="radio" className="form-check-input form-check-input" value="option2" />
+                <input id="inline-radio2" name="inline-radios" type="radio" className="form-check-input form-check-input" value="Yes" />
                 <label className="form-check-label form-check-label ">Restricted</label>
               </div>
               <div className="form-check form-check-inline">
-                <input id="inline-radio3" name="inline-radios" type="radio" className="form-check-input form-check-input" value="option3" />
+                <input id="inline-radio3" name="inline-radios" type="radio" className="form-check-input form-check-input" value="All" />
                 <label className="form-check-label form-check-label ">All</label>
               </div>
             </Col>
             <Col md="3">
               <div className="form form-inline">
                 <label className="form form-label" style={styles.titleLabel}>By status:</label>
-                <select name="selectSm" id="SelectLm" className="form-control-sm form-control">
-                  <option value="0">All</option>
-                  <option value="1">New</option>
-                  <option value="2">Evaluating</option>
-                  <option value="3">Prospect/option></option>
-                  <option value="4">Pursuing</option>
-                  <option value="5">Buying5</option>
-                  <option value="6">No longer buying</option>
-                  <option value="7">Rejected</option>
+                <select name="selectSm" id="SelectLm" className="form-control-sm form-control" onChange={this.setStatus.bind(this)}>
+                  {
+                    statuses.map((status, index) => {
+                      return (<option key={index} value={status}>{status}</option>)
+                    })
+                  }
                 </select>
               </div>
             </Col>
             <Col md="3">
               <div className="form form-inline">
-                <label className="form form-label" style={styles.titleLabel}>By status:</label>
+                <label className="form form-label" style={styles.titleLabel}>View</label>
                 <select name="selectSm" id="SelectLm" className="form-control-sm form-control">
-                  <option value="0">Please select</option>
-                  <option value="1">Option Option Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
-                  <option value="4">Option #4</option>
-                  <option value="5">Option #5</option>
+                  <option value="0">All brands, all status</option>
                 </select>
               </div>
             </Col>
@@ -235,7 +184,7 @@ class Brands extends Component {
           <Row className="mt-3">
             <Col md="12">
               {this.renderRedirect()}
-              {this.BrandTable()}
+              <div ref={el => (this.el = el)} />
             </Col>
           </Row>
         </div>

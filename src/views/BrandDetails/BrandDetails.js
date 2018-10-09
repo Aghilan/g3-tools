@@ -35,20 +35,24 @@ import {
     FormText,
     Table
   } from 'reactstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 import classnames from 'classnames';
+import Tabulator from "tabulator-tables";
+import columns from "./data-columns";
+import data from "./data";
 
 const styles = {
-    labelWidth: {
-        width: 180
-    },
-    rightLink: {
-        lineHeight: 3,
-        cursor: "pointer"
-    },
-    handCursor: {
-      cursor: "pointer"
-    }
-};
+  labelWidth: {
+    width: 180
+  },
+  rightLink: {
+    lineHeight: 3,
+    cursor: "pointer"
+  },
+  handCursor: {
+    cursor: "pointer"
+  }
+}
 
 class BrandDetails extends Component {
     constructor(props, context) {
@@ -58,18 +62,40 @@ class BrandDetails extends Component {
         this.renderRedirect = this.renderRedirect.bind(this);
         this.backClick = this.backClick.bind(this);
 
-        this.state = {
-            key: 1
-        };
-
         this.toggle = this.toggle.bind(this);
         this.state = {
           activeTab: '1',
-          backClicked: false
+          backClicked: false,
+          tabInitiated: false,
+          key: 1
         };
+        this.el = null;
+        this.tabulator = null; //variable to hold your table
+        this.columns = columns
+        this.data = data //data for table to display
     }
 
-    toggle(tab) {
+    componentDidMount() {
+      //instantiate Tabulator when element is mounted
+      this.tabulator = new Tabulator(this.el, {
+        data: this.data, //link data to table
+        columns: this.columns,
+        layoutColumnsOnNewData: true,
+        resizableRows:true,
+        pagination:"local",
+        paginationSize:10,
+        redirectToDetails: function() {
+          this.setState({
+            rowClick: true
+          })
+        },
+        alpha: 22
+      });
+      console.log(this.tabulator);
+      this.setState({tableInitiated: true})
+    }
+
+  toggle(tab) {
       if (this.state.activeTab !== tab) {
         this.setState({
           activeTab: tab
@@ -92,6 +118,14 @@ class BrandDetails extends Component {
       //return <Redirect to='/dashboard' />
     }
 
+
+    toggle(i) {
+      const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i ? !element : false); });
+      this.setState({
+        dropdownOpen: newArray,
+      });
+    }
+
     render() {
         return (
             <div>
@@ -112,8 +146,13 @@ class BrandDetails extends Component {
                     <Row>
                       <Col sm="12" className="text-right"><a onClick={() => this.backClick()} style={styles.rightLink}>Return to List</a></Col>
                     </Row>
-                    <Row className="float-right">
-                      <Col sm="12"><button type="button" className="btn btn-square">...</button></Col>
+                    <Row className="float-right ">
+                      <div className="dropdown">
+                        <button className="dropbtn">...</button>
+                        <div className="dropdown-content">
+                          <a href="#">Delete Brand</a>
+                        </div>
+                      </div>
                     </Row>
                   </Col>
                 </Row>
@@ -153,9 +192,11 @@ class BrandDetails extends Component {
                         <Col xs="12" md="4">
                           <Input type="text" id="brand_name" name="brand_name" placeholder="Text" />
                         </Col>
-                        <Col xs="12" md="2"></Col>
-                        <Col xs="10" md="3">
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Label>Internal id: <strong>2353</strong></Label>
+                        <Col xs="12" md="1"></Col>
+                        <Col xs="10" md="4">
+                          <Label className="pull-left">
+                            <Label>Internal id: <strong>2353</strong></Label>
+                          </Label>
                         </Col>
                       </FormGroup>
                       <FormGroup row>
@@ -168,8 +209,8 @@ class BrandDetails extends Component {
                         </Col>
                         <Col xs="12" md="1"></Col>
                         <Col xs="12" md="4">
-                          <Label className="pull-right">Created: <strong>8/1/2018 4:22 PM</strong> By: <strong>dgarv</strong></Label>
-                          <Label className="pull-right">Modified: <strong>8/2/2018 9:52 PM</strong> By: <strong>dgarv</strong></Label>
+                          <Label className="pull-left">Created: <strong>8/1/2018 4:22 PM</strong>&nbsp;&nbsp;&nbsp; By: <strong>dgarv</strong></Label>
+                          <Label className="pull-left">Modified: <strong>8/2/2018 9:52 PM</strong>&nbsp;&nbsp;&nbsp; By: <strong>dgarv</strong></Label>
                         </Col>
                       </FormGroup>
                       <FormGroup row>
@@ -214,7 +255,7 @@ class BrandDetails extends Component {
                           <Input type="text" id="distributor" name="distributor" placeholder="Text" />
                         </Col>
                         <Col xs="12" md="3"></Col>
-                        <Col xs="12" md="3">
+                        <Col xs="12" md="3" className="scraping_cost">
                             <Input className="form-check-input" type="checkbox" id="ck_cost" name="ck_cost" value="option1" />
                             <Label className="form-check-label" check htmlFor="ck_cost">Scraping cost</Label>
                         </Col>
@@ -227,7 +268,7 @@ class BrandDetails extends Component {
                           <Input type="text" id="lead_from" name="lead_from" placeholder="Text" />
                         </Col>
                         <Col xs="12" md="3"></Col>
-                        <Col xs="12" md="3">
+                        <Col xs="12" md="3" className="scraping_upc">
                             <Input className="form-check-input" type="checkbox" id="ck_UPCs" name="ck_UPCs" value="option1" />
                             <Label className="form-check-label" check htmlFor="ck_UPCs">Scraping UPCs</Label>
                         </Col>
@@ -241,85 +282,14 @@ class BrandDetails extends Component {
                         </Col>
                       </FormGroup>
                     </Form>
-                    <Table responsive hover bordered>
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Source</th>
-                          <th>Primary</th>
-                          <th>Discount Note</th>
-                          <th>Categories</th>
-                          <th>b2b Site</th>
-                          <th>User Id</th>
-                          <th>Password</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>
-                            <Input type="select" name="select" id="exampleSelect">
-                              <option className="select">Areesh</option>
-                              <option>SLRC</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </Input>
-                          </td>
-                          <td align="center"><Input type="radio" id="radio1" name="Radio1" /></td>
-                          <td>We should get 15% off wholesale for footwear</td>
-                          <td>Sports and outdoors</td>
-                          <td>http://dealers.darn tough.com/</td>
-                          <td>darntough</td>
-                          <td>dtv</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>
-                            <Input type="select" name="select" id="exampleSelect">
-                              <option>Areesh</option>
-                              <option className="select">SLRC</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </Input>
-                          </td>
-                          <td align="center"><Input type="radio" id="radio2" name="Radio2" /></td>
-                          <td></td>
-                          <td>Clothing Shoes & Jewelry</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">4</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </Table>
+                    <div ref={el => (this.el = el)} />
                     <Row>
                       <Col md="10"></Col>
                       <Col md="1">
-                        <Button color="primary"><i className="icons cui-ban"></i>&nbsp; Cancel</Button>{' '}
+                        <Button color="primary"><a style={{color: 'white'}} href="/#/brands"><i className="icons cui-ban"></i>&nbsp; Cancel</a></Button>{' '}
                       </Col>
                       <Col md="1">
-                        <Button color="primary"><i className="fa fa-save"></i>&nbsp; Save</Button>{' '}
+                        <Button color="primary"><a style={{color: 'white'}} href="/#/brands"><i className="fa fa-save"></i>&nbsp; Save</a></Button>{' '}
                       </Col>
                     </Row>
                   </TabPane>
@@ -559,6 +529,6 @@ class BrandDetails extends Component {
                 </TabContent>
             </div>
         );
-    } 
+    }
 }
 export default BrandDetails;

@@ -23,7 +23,7 @@ export default {
       url: '/brands',
       icon: 'icon-drop',
     }
-    /* {
+    /*{
       name: 'Typography',
       url: '/theme/typography',
       icon: 'icon-pencil',
@@ -65,7 +65,6 @@ export default {
           name: 'Dropdowns',
           url: '/base/dropdowns',
           icon: 'icon-puzzle'
-          icon: 'icon-puzzle',
         },
         {
           name: 'Forms',
@@ -268,6 +267,6 @@ export default {
       url: 'http://coreui.io/pro/react/',
       icon: 'icon-layers',
       variant: 'danger',
-    }, */
+    }*/
   ],
 };
