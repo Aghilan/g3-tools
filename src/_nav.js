@@ -22,7 +22,12 @@ export default {
       name: 'Brands',
       url: '/brands',
       icon: 'icon-drop',
-    }
+    },
+    {
+      name: 'Sources',
+      url: '/sources',
+      icon: 'fa fa-user',
+    },
     /*{
       name: 'Typography',
       url: '/theme/typography',

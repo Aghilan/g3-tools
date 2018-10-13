@@ -119,7 +119,7 @@ class Brands extends Component {
         <div className="animated fadeIn">
           <Row>
             <Col sm="4">
-              <h2>Brand Management</h2>
+              <h2>Brand Sources</h2>
             </Col>
             <Col sm="3">
               <div className="input-group md-form form-sm form-2 pl-0">
@@ -133,7 +133,7 @@ class Brands extends Component {
               <ButtonGroup className="pull-right">
                 {/*<button type="button" className="btn btn-square btn-primary" style={styles.button}>Manage Views</button>*/}
                 <button type="button" className="btn btn-square btn-danger" style={styles.button}>Export</button>
-                <button type="button" className="btn btn-square btn-success" style={styles.button}>Add Brand</button>
+                <button type="button" className="btn btn-square btn-success" style={styles.button}>Add Brand Source</button>
               </ButtonGroup>
             </Col>
           </Row>

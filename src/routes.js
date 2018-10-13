@@ -175,6 +175,11 @@ const Brands = Loadable({
   loading: Loading,
 });
 
+const Sources = Loadable({
+  loader: () => import('./views/Sources'),
+  loading: Loading,
+});
+
 const BrandDetails = Loadable({
   loader: () => import('./views/BrandDetails'),
   loading: Loading,
@@ -340,6 +345,7 @@ const routes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/brands', name: 'Brands', component: Brands },
+  { path: '/sources', name: 'Sources', component: Sources },
   { path: '/branddetails', name: 'Brand Details', component: BrandDetails },
   //{ path: '/#/branddetails', name: 'Brand Details', component: BrandDetails },
   { path: '/users', exact: true,  name: 'Users', component: Users },

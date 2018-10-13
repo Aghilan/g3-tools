@@ -40,16 +40,16 @@ const columns = [
 
     }
   },
-  {title:"Name", field:"name", width:250, editor: true},
-  {title:"Status", field:"status", width: 100, editor:true},
-  {title:"Active", field:"is_active", sorter: "boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input"},
-  {title:"Primary Source", field:"primary_source", editor:true, width: 150},
-  {title:"Sold on Amazon", field:"is_sold_on_amazon", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: 'input', widthShrink: 2, width: 70},
-  {title:"Amazon Listing", field:"amazon_listing", align:"right", editor:true, widthShrink: 2, width: 70},
-  {title:"Scan Amazon", field:"is_scan_amazon", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input", widthShrink: 2, width: 70},
-  {title:"Restricted", field:"restricted", align:"center", editor:"select", editorParams:{"Y":"Yes", "N":"No"},  width: 75},
-  {title:"Good buys", field:"is_good_buys", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input", widthShrink: 2, width: 70},
-  {title:"Scraping", field:"is_scraping", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input", widthShrink: 2, width: 70, variableHeight: true},
+  {title:"Name", headerFilter:true, field:"name", editor: true},
+  {title:"Status", headerFilter:true, field:"status", editor:true},
+  {title:"Active", headerFilter:true, field:"is_active", sorter: "boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input"},
+  {title:"Primary Source", headerFilter:true, field:"primary_source", editor:true},
+  {title:"Sold on Amazon", headerFilter:true, field:"is_sold_on_amazon", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: 'input', widthShrink: 2},
+  {title:"Amazon Listing", headerFilter:true, field:"amazon_listing", align:"right", editor:true, widthShrink: 2},
+  {title:"Scan Amazon", headerFilter:true, field:"is_scan_amazon", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input", widthShrink: 2},
+  {title:"Restricted", headerFilter:true, field:"restricted", align:"center", editor:"select", editorParams:{"Y":"Yes", "N":"No"}},
+  {title:"Good buys", headerFilter:true, field:"is_good_buys", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input", widthShrink: 2},
+  {title:"Scraping", headerFilter:true, field:"is_scraping", sorter:"boolean", align:"center", formatter:"tickCross", editor: "tick", width: "input", widthShrink: 2, variableHeight: true},
 ];
 
 export default columns;
