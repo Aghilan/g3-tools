@@ -67,7 +67,8 @@ class BrandDetails extends Component {
           activeTab: '1',
           backClicked: false,
           tabInitiated: false,
-          key: 1
+          key: 1,
+          dropdownOpen: []
         };
         this.el = null;
         this.tabulator = null; //variable to hold your table
@@ -119,12 +120,12 @@ class BrandDetails extends Component {
     }
 
 
-    toggle(i) {
-      const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i ? !element : false); });
-      this.setState({
-        dropdownOpen: newArray,
-      });
-    }
+    // toggle(i) {
+    //   const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i ? !element : false); });
+    //   this.setState({
+    //     dropdownOpen: newArray,
+    //   });
+    // }
 
     render() {
         return (
