@@ -67,6 +67,7 @@ class BrandDetails extends Component {
           activeTab: '1',
           backClicked: false,
           tabInitiated: false,
+          tableInitated: false,
           key: 1,
           dropdownOpen: []
         };

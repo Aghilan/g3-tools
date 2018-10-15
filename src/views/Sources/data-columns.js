@@ -5,7 +5,7 @@ var deleteIcon = function(value, data, cell, row, options){ //plain text value
 };
 
 var editIcon = function(value, data, cell, row, options){ //plain text value
-  return "<a href='/#/branddetails'><i class='fa fa-edit'></i></a>"
+  return "<a href='/#/brands/sourcedetails'><i class='fa fa-edit'></i></a>"
 };
 
 function customFilter(data, filterParams){

@@ -25,9 +25,10 @@ export default {
     },
     {
       name: 'Sources',
-      url: '/sources',
+      url: '/brands/sources',
       icon: 'fa fa-user',
-    },
+    }
+
     /*{
       name: 'Typography',
       url: '/theme/typography',

@@ -40,13 +40,11 @@ const columns = [
 
     }
   },
-  {title:"Source", field:"source", width:200, headerFilter:true, editor: true},
-  {title:"Primary", field:"primary", sorter: "boolean", align:"center", formatter:"tickCross", headerFilter:true, editor: "tick", width: "input"},
-  {title:"Discount Note", field:"discount_note", width:200, headerFilter:true, editor: true},
-  {title:"Categories", field:"categories", editor:true, headerFilter:true, width: 200},
-  {title:"b2b Site", field:"b2b_site", editor: true, headerFilter:true, width: 180},
-  {title:"User Id", field:"user_id", editor: true, headerFilter:true, width: 100 },
-  {title:"Password", field:"password", editor: true, headerFilter:true, width: 100},
+  {title:"Contact Name", field:"contact_name", width:200, headerFilter: true, editor: true},
+  {title:"Primary", field:"primary", sorter: "boolean",  headerFilter: true, align:"center", formatter:"tickCross", editor: "tick", width: "input"},
+  {title:"Phone", field:"phone", headerFilter: true,  width:200, editor: true},
+  {title:"Email", field:"email", headerFilter: true,  editor:true, width: 200},
+  {title:"Note", field:"note", headerFilter: true,  editor: true, width: 300}
 ];
 
 export default columns;

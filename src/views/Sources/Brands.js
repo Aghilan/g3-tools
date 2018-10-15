@@ -35,7 +35,7 @@ const brandData = new Array();
 
 //brandData.push({"#": "", "Name": "110%", "S...": "110%", "D...": "Evaluating", ""});
 
-class Brands extends Component {
+class Source extends Component {
   constructor(props) {
     super(props);
     this.rowClick = this.rowClick.bind(this);
@@ -194,4 +194,4 @@ class Brands extends Component {
       );
     }
 }
-export default Brands;
+export default Source;
